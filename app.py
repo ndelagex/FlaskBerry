@@ -5,10 +5,12 @@ app.debug = True
 
 @app.route("/")
 def main():
-    url = os.environ.get('DATABASE_URL') #postgres url in heroku
-    #conn = psycopg2.connect(url, sslmode='require')
+    if os.path.isfile('lab_app.db'):
+      conn = sqlite3.connect('lab_app.db')
+    else:
+      url = os.environ.get('DATABASE_URL') #postgres url in heroku
+      conn = psycopg2.connect(url, sslmode='require')
 
-    conn = sqlite3.connect('lab_app.db') or psycopg2.connect(url, sslmode='require')
     curs = conn.cursor()
     curs.execute("SELECT * FROM temperatures limit 1")
     temperatures = curs.fetchall()
