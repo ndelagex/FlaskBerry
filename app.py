@@ -12,9 +12,9 @@ def main():
       conn = psycopg2.connect(url, sslmode='require')
 
     curs = conn.cursor()
-    curs.execute("SELECT * FROM temperatures limit 1")
+    curs.execute("SELECT * FROM temperatures order by rDatetime desc limit 1")
     temperatures = curs.fetchall()
-    curs.execute("SELECT * FROM humidities limit 1")
+    curs.execute("SELECT * FROM humidities order by rDatetime desc limit 1")
     humidities = curs.fetchall()
 
     temperature = temperatures[0][2]
